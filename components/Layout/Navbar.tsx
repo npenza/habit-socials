@@ -14,7 +14,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { DarkModeToggle } from "./DarkModeToggle";
-import AccountButton from "../Account/AccountButton";
+import LogInButton from "../Account/LogInButton";
+import AccountSection from "../Account/AccountSection";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -123,7 +124,7 @@ export function Navbar() {
 
         <div className="flex flex-row items-center space-x-2">
           <DarkModeToggle />
-          <AccountButton />
+          <AccountSection />
         </div>
       </div>
     </div>
