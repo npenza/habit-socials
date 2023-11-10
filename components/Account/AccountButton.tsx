@@ -1,14 +1,18 @@
-import React from 'react'
-import { Button } from '../ui/button'
+"use client"
+
+import React from "react";
+import { Button } from "../ui/button";
+import { signIn } from "next-auth/react";
 
 function AccountButton() {
+
   return (
     <div>
-        <Button>Log In</Button>
+      <Button onClick={signIn}>Log In</Button>
     </div>
-  )
+  );
 }
 
 // AccountButton.propTypes = {}
 
-export default AccountButton
+export default AccountButton;

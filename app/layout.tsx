@@ -15,17 +15,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-        <body>
-        <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-          <Navbar />
-          {children}
-      </ThemeProvider>
-        </body>
+      <body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Navbar />
+            {children}
+          </ThemeProvider>
+      </body>
     </html>
   );
 }
