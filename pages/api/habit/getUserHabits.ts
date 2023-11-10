@@ -7,9 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method === "POST") {
-    
-    // Create Post
+  if (req.method === "GET") {
     try {
       // Get session
       const session = await getServerSession(req, res, authOptions);
@@ -18,25 +16,19 @@ export default async function handler(
       if (!session) {
         return res
           .status(401)
-          .json({ message: "Please sign in to make a post." });
+          .json({ message: "Please sign in to access habits." });
       }
 
       // Get User
       const prismaUser = await prisma.user.findUnique({
         where: { email: session?.user?.email || "" },
-      });
-
-      // Get form data
-      const { habitMessage } = req.body;
-
-      const result = await prisma.habit.create({
-        data: {
-          message: habitMessage,
-          userId: prismaUser?.id || "",
+        include: {
+          habits: true,
         },
       });
-
-      res.status(201).json(result);
+      
+      // Return habits data
+      res.status(201).json(prismaUser?.habits);
     } catch (err) {
       res.status(403).json({ err: "Error has occured while making a post." });
     }
