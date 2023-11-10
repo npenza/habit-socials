@@ -27,10 +27,12 @@ function ManageAccountButton({ session }: { session: Session }) {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>{session?.user?.name || "My Account"}</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {session?.user?.name || "My Account"}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => signOut()}>
-              Sign Out
+            Sign Out
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
