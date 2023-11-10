@@ -12,6 +12,4 @@ function LogInButton() {
   );
 }
 
-// AccountButton.propTypes = {}
-
 export default LogInButton;

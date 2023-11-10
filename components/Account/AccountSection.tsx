@@ -1,20 +1,17 @@
 import React from "react";
-import { useSession, signOut } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
 import LogInButton from "./LogInButton";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import ManageAccountButton from "./ManageAccountButton";
 
-function AccountSection() {
-  const { data: session, status } = useSession();
+async function AccountSection() {
+  const session = await getServerSession(authOptions);
 
-  if (status === "loading") {
-    return null; // Or a spinner, or null if you prefer no output during loading
-  }
-
-  if (session) {
+  if (session?.user) {
     // User is logged in
     return (
       <div>
-        Hello, {session.user.name}!
-        <button onClick={() => signOut()}>Sign out</button>
+        <ManageAccountButton session={session} />
       </div>
     );
   } else {
