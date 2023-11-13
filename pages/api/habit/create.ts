@@ -38,13 +38,13 @@ export default async function handler(
 
       // Map the frequency value to the corresponding enum value
       switch (frequency) {
-        case 'Daily':
+        case "Daily":
           frequencyType = FrequencyType.Daily;
           break;
-        case 'Weekly':
+        case "Weekly":
           frequencyType = FrequencyType.Weekly;
           break;
-        case 'Monthly':
+        case "Monthly":
           frequencyType = FrequencyType.Monthly;
           break;
         default:
@@ -78,7 +78,6 @@ export default async function handler(
 
       // Handle the result as needed
       res.status(201).json(result);
-
     } catch (err) {
       console.error(err); // Log the error for debugging
       res.status(500).json({ err: "Error has occurred while making a post." });

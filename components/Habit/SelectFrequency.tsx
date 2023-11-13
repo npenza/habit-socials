@@ -18,13 +18,12 @@ export default function SelectFrequency({
   onChange,
   value: selectedValue,
 }: SelectFrequencyProps) {
+  const [internalValue, setInternalValue] = React.useState("");
 
-  const [internalValue , setInternalValue] = React.useState("")
-
-  const handleValueChange = (currentValue : string) => {
-    alert("change")
+  const handleValueChange = (currentValue: string) => {
+    alert("change");
     onChange(currentValue); // Update the selected value when an item is selected
-    setInternalValue(currentValue)
+    setInternalValue(currentValue);
   };
 
   return (
@@ -39,10 +38,16 @@ export default function SelectFrequency({
           <SelectItem value="Daily" onSelect={() => handleValueChange("Daily")}>
             Day
           </SelectItem>
-          <SelectItem value="Weekly" onSelect={() => handleValueChange("Weekly")}>
+          <SelectItem
+            value="Weekly"
+            onSelect={() => handleValueChange("Weekly")}
+          >
             Week
           </SelectItem>
-          <SelectItem value="Monthly" onSelect={() => handleValueChange("Monthly")}>
+          <SelectItem
+            value="Monthly"
+            onSelect={() => handleValueChange("Monthly")}
+          >
             Month
           </SelectItem>
         </SelectGroup>

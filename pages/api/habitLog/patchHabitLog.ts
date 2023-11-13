@@ -7,7 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method === "GET") {
+  if (req.method === "PATCH") {
     try {
       // Get session
       const session = await getServerSession(req, res, authOptions);
@@ -16,26 +16,29 @@ export default async function handler(
       if (!session) {
         return res
           .status(401)
-          .json({ message: "Please sign in to access habits." });
+          .json({ message: "Please sign in to update habits." });
       }
 
-      // Get User
-      const prismaUser = await prisma.user.findUnique({
-        where: { email: session?.user?.email || "" },
-        include: {
-          habits: {
-            include: {
-              frequency: true,
-              habitLogs: true,
-            },
-          },
+      // Get Habit Log ID
+      const { habitLogID, status } = req.body;
+
+      const habitLogResult = await prisma.habitLog.update({
+        where: {
+          id: habitLogID,
+        },
+        data: {
+          status: status,
         },
       });
 
+      console.log(habitLogResult);
+
       // Return habits data
-      res.status(201).json(prismaUser?.habits);
+      res.status(201).json(habitLogResult);
     } catch (err) {
-      res.status(403).json({ err: "Error has occured while making a post." });
+      res
+        .status(403)
+        .json({ err: "Bad request when trying to update habit log." });
     }
   }
 }

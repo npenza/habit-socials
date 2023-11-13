@@ -15,7 +15,7 @@ const fetchAuthHabits = async () => {
 function Dashboard() {
   const { data: habits, isLoading } = useQuery<Habit[]>({
     queryFn: fetchAuthHabits,
-    queryKey: ["auth-habits"],
+    queryKey: ["authhabits"],
   });
 
   if (isLoading) return <h1>Loading</h1>;

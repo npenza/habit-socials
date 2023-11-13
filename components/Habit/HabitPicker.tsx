@@ -83,9 +83,7 @@ export function HabitPicker({ onChange, value }: HabitPickerProps) {
                 <CheckIcon
                   className={cn(
                     "ml-auto h-4 w-4",
-                    value === habitItem.value
-                      ? "opacity-100"
-                      : "opacity-0",
+                    value === habitItem.value ? "opacity-100" : "opacity-0",
                   )}
                 />
               </CommandItem>
