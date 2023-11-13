@@ -26,7 +26,7 @@ export default async function handler(
           habits: true,
         },
       });
-      
+
       // Return habits data
       res.status(201).json(prismaUser?.habits);
     } catch (err) {

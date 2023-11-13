@@ -19,7 +19,7 @@ function ManageAccountButton({ session }: { session: Session }) {
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Avatar>
+          <Avatar className="border-primary border-2">
             <AvatarImage src={session?.user?.image || ""} />
             <AvatarFallback>
               {session?.user?.name?.split(" ").map((name) => name[0])}

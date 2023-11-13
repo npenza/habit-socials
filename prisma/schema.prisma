@@ -45,7 +45,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  habits        Habit[]   
+  habits        Habit[]
 }
 
 model VerificationToken {
@@ -56,10 +56,39 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-
 model Habit {
-  id      String @id @default(cuid())
-  message String
-  userId  String
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String     @id @default(cuid())
+  action    String // Changed from 'message' to 'action' for clarity
+  frequency Frequency?
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habitLogs HabitLog[]
+}
+
+model Frequency {
+  id      String        @id @default(cuid())
+  type    FrequencyType
+  count   Int // Number of times the habit should occur in the specified period
+  habitId String        @unique
+  habit   Habit         @relation(fields: [habitId], references: [id], onDelete: Cascade)
+}
+
+enum FrequencyType {
+  Daily
+  Weekly
+  Monthly
+}
+
+model HabitLog {
+  id      String      @id @default(cuid())
+  date    DateTime    @default(now())
+  status  HabitStatus @default(Empty)
+  habitId String      
+  habit   Habit       @relation(fields: [habitId], references: [id], onDelete: Cascade)
+}
+
+enum HabitStatus {
+  Success
+  Fail
+  Empty
 }

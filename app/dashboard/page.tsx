@@ -4,6 +4,8 @@ import CreateHabitForm from "@/components/Habit/CreateHabitForm";
 import axios from "axios";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import HabitCard from "@/components/Habit/HabitCard";
+import { Habit } from "@/types/Habit";
 
 const fetchAuthHabits = async () => {
   const response = await axios.get("api/habit/getUserHabits");
@@ -19,12 +21,13 @@ function Dashboard() {
   if (isLoading) return <h1>Loading</h1>;
 
   return (
-    <div>
+    <div className="container">
       Set up a Habit!
       <CreateHabitForm />
-      
       Your Habits
-      {habits?.map((habit) => <p key={habit.id}>{habit.message}</p>)}
+      <div className="grid grid-cols-2 justify-items-center gap-y-8 mt-4">
+        {habits?.map((habit) => <HabitCard key={habit.id} habit={habit} />)}
+      </div>
     </div>
   );
 }
