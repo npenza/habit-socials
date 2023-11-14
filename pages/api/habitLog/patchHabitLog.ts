@@ -22,6 +22,7 @@ export default async function handler(
       // Get Habit Log ID
       const { habitLogID, status } = req.body;
 
+      // Update the current log
       const habitLogResult = await prisma.habitLog.update({
         where: {
           id: habitLogID,
@@ -30,8 +31,6 @@ export default async function handler(
           status: status,
         },
       });
-
-      console.log(habitLogResult);
 
       // Return habits data
       res.status(201).json(habitLogResult);

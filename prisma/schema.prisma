@@ -82,6 +82,7 @@ enum FrequencyType {
 model HabitLog {
   id      String      @id @default(cuid())
   date    DateTime    @default(now())
+  createdAt DateTime    @default(now())
   status  HabitStatus @default(Empty)
   habitId String      
   habit   Habit       @relation(fields: [habitId], references: [id], onDelete: Cascade)
