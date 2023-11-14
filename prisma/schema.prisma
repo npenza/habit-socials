@@ -59,24 +59,9 @@ model VerificationToken {
 model Habit {
   id        String     @id @default(cuid())
   action    String // Changed from 'message' to 'action' for clarity
-  frequency Frequency?
   userId    String
   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   habitLogs HabitLog[]
-}
-
-model Frequency {
-  id      String        @id @default(cuid())
-  type    FrequencyType
-  count   Int // Number of times the habit should occur in the specified period
-  habitId String        @unique
-  habit   Habit         @relation(fields: [habitId], references: [id], onDelete: Cascade)
-}
-
-enum FrequencyType {
-  Daily
-  Weekly
-  Monthly
 }
 
 model HabitLog {

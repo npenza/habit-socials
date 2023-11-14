@@ -4,26 +4,28 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-  CardContent,
-  CardFooter,
 } from "../ui/card";
 import { Habit } from "@/types/Habit";
-import { HabitLogs } from "../../types/Habit";
 import HabitCheck from "./HabitCheck";
+import formatStartDate from "@/services/formatStartDate";
 
 export default function HabitCard({ habit }: { habit: Habit }) {
+
+  // Get Start Date
+  const startDate = formatStartDate(habit.habitLogs[0].date)
+
   return (
     <Card className="w-[90%] py-4">
       <CardHeader>
         <CardTitle className="capitalize">{habit.action}</CardTitle>
-        <CardDescription>
-          {habit.frequency.count} times - {habit.frequency.type}
-        </CardDescription>
+        Started at {startDate}
         <CardDescription className="my-4">
           {/* Habit check grid */}
-          {habit?.habitLogs?.map((habitLog, index) => (
-            <HabitCheck key={index} log={habitLog} />
+          <div className="flex flex-row space-x-2">
+          {habit?.habitLogs?.map((habitLog, index, array) => (
+            <HabitCheck key={index} log={habitLog} isLast={index === array.length - 1} />
           ))}
+          </div>
         </CardDescription>
       </CardHeader>
     </Card>

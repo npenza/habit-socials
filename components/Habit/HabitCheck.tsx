@@ -10,7 +10,7 @@ import {
 } from "../ui/dropdown-menu";
 import axios from "axios";
 
-export default function HabitCheck({ log }: { log: HabitLogs }) {
+export default function HabitCheck({ log , isLast }: { log: HabitLogs , isLast:boolean}) {
   const [status, setStatus] = useState(log.status);
 
   const handleUpdate = async (updateStatus: string) => {
@@ -56,15 +56,23 @@ export default function HabitCheck({ log }: { log: HabitLogs }) {
     );
   };
 
-  if (status == "Empty") {
+  if (status == "Empty" && isLast) {
     return (
       <HabitMenu>
-        <div className="w-6 h-6 bg-gray-300"></div>
+        <div className="w-6 h-6 animate-pulse bg-gray-300 shadow-sm border-2 border-gray-400"></div>
       </HabitMenu>
     );
   }
 
-  if (status == "Success") {
+  if (status == "Empty" && !isLast) {
+    return (
+        <div className="w-6 h-6 bg-gray-300 flex justify-center items-center">
+          <Cross1Icon color="gray" />
+        </div>
+    );
+  }
+
+  if (status == "Success" && isLast) {
     return (
       <HabitMenu>
         <div className="w-6 h-6 bg-green-400 flex justify-center items-center">
@@ -74,13 +82,29 @@ export default function HabitCheck({ log }: { log: HabitLogs }) {
     );
   }
 
-  if (status == "Fail") {
+  if (status == "Success" && !isLast) {
+    return (
+        <div className="w-6 h-6 bg-green-400 flex justify-center items-center">
+          <CheckIcon color="white" />
+        </div>
+    );
+  }
+
+  if (status == "Fail" && isLast) {
     return (
       <HabitMenu>
         <div className="w-6 h-6 bg-red-400 flex justify-center items-center">
           <Cross1Icon color="white" />
         </div>
       </HabitMenu>
+    );
+  }
+
+  if (status == "Fail" && !isLast) {
+    return (
+        <div className="w-6 h-6 bg-red-400 flex justify-center items-center">
+          <Cross1Icon color="white" />
+        </div>
     );
   }
 }
