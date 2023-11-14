@@ -24,7 +24,7 @@ function Dashboard() {
     <div className="container">
       Set up a Habit!
       <CreateHabitForm />
-      Your Habits
+      <p className="text-center text-2xl text-gray-400 font-bold">Your Habits</p>
       <div className="grid grid-cols-2 justify-items-center gap-y-8 mt-4">
         {habits?.map((habit) => <HabitCard key={habit.id} habit={habit} />)}
       </div>

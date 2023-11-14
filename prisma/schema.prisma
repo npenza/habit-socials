@@ -46,6 +46,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   habits        Habit[]
+  followers     Follow[]  @relation("UserFollowers")
+  following     Follow[]  @relation("UserFollowing")
 }
 
 model VerificationToken {
@@ -56,21 +58,43 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Follow {
+  id          String @id @default(cuid())
+  followerId  String
+  followingId String
+  follower    User   @relation("UserFollowers", fields: [followerId], references: [id])
+  following   User   @relation("UserFollowing", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+}
+
+model Follower {
+  id         String  @id @default(cuid())
+  userId     String
+  followerId String
+  Habit      Habit?  @relation(fields: [habitId], references: [id])
+  habitId    String?
+
+  @@unique([userId, followerId])
+}
+
 model Habit {
   id        String     @id @default(cuid())
   action    String // Changed from 'message' to 'action' for clarity
   userId    String
   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   habitLogs HabitLog[]
+  followers Follower[]
+  lastUpdated DateTime @default(now())
 }
 
 model HabitLog {
-  id      String      @id @default(cuid())
-  date    DateTime    @default(now())
+  id        String      @id @default(cuid())
+  date      DateTime    @default(now())
   createdAt DateTime    @default(now())
-  status  HabitStatus @default(Empty)
-  habitId String      
-  habit   Habit       @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  status    HabitStatus @default(Empty)
+  habitId   String
+  habit     Habit       @relation(fields: [habitId], references: [id], onDelete: Cascade)
 }
 
 enum HabitStatus {

@@ -23,6 +23,7 @@ function CreateHabitForm() {
       if (response) {
         // Invalidate query / refresh user's habits
         queryClient.invalidateQueries("auth-habits");
+        queryClient.invalidateQueries("public-habits");
 
         setAction("");
       }

@@ -2,6 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
+import { now } from "next-auth/client/_utils";
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,6 +32,15 @@ export default async function handler(
           status: status,
         },
       });
+
+      const habit = await prisma.habit.update({
+        where: {
+          id: habitLogResult.habitId,
+        },
+        data: {
+          lastUpdated: new Date(), // This will set lastUpdated to the current date and time
+        },
+      })
 
       // Return habits data
       res.status(201).json(habitLogResult);
